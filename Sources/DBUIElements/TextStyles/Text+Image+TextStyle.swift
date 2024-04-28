@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Text+Image+TextStyle.swift
 //  
 //
 //  Created by Dimitri Brukakis on 28.04.24.
@@ -7,15 +7,20 @@
 
 import SwiftUI
 
-extension Text {
-    func textStyle(_ textStyle: TextStyle) -> some View {
-        self.modifier(TextStyleModifier(textStyle: textStyle))
+public extension Text {
+    public func textStyle(_ paramsProtocol: TextStyleParamsProtocol) -> some View {
+        self.modifier(TextStyleModifier(textStyle: paramsProtocol.params))
+    }
+    public func textStyle(_ params: TextStyleParams) -> some View {
+        self.modifier(TextStyleModifier(textStyle: params))
     }
 }
 
-
-extension Image {
-    func textStyle(_ textStyle: TextStyle) -> some View {
-        self.modifier(TextStyleModifier(textStyle: textStyle))
+public extension Image {
+    public func textStyle(_ paramsProtocol: TextStyleParamsProtocol) -> some View {
+        self.modifier(TextStyleModifier(textStyle: paramsProtocol.params))
+    }
+    public func textStyle(_ params: TextStyleParams) -> some View {
+        self.modifier(TextStyleModifier(textStyle: params))
     }
 }

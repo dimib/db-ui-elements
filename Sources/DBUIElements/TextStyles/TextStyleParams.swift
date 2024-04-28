@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+/// Implement this protocol in enums to easily assign text styles
+public protocol TextStyleParamsProtocol {
+    var params: TextStyleParams { get }
+}
+
 /// Text styles just defines how text views will look like. Styles should
 /// be prefered before setting fonts or other text specific parameters.
 public struct TextStyleParams {

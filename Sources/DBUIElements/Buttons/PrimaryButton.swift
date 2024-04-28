@@ -7,18 +7,23 @@
 
 import SwiftUI
 
-struct PrimaryButton: View {
+public struct PrimaryButton: View, StaticButtonStylable {
+    
+    
+    // MARK: Static Button Stylable
+    public static var style: any ButtonStylable = DefaultPrimaryButtonStyle()
+
     let image: Image?
     let label: String
     let action: (() -> Void)
     
-    init(image: Image? = nil, label: String, action: @escaping (() -> Void)) {
+    public init(image: Image? = nil, label: String, action: @escaping () -> Void) {
         self.image = image
         self.label = label
         self.action = action
     }
 
-    var body: some View {
+    public var body: some View {
         Button(action: action) {
             HStack {
                 if let image {
@@ -26,23 +31,27 @@ struct PrimaryButton: View {
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()
-                        .tint(Color.textOnButtonPrimary)
+                        .tint(Self.style.buttonStyleForegroundColor)
                         .frame(height: 28)
                 }
                 Text(label)
-                    .foregroundColor(Color.textOnButtonPrimary)
-                    .textStyle(.button)
+                    .foregroundColor(Self.style.buttonStyleForegroundColor)
+                    .textStyle(Self.style.buttonTextStyle)
             }
             .frame(maxWidth: .infinity, minHeight: 52)
             .padding(.horizontal, 8)
-            .background(Color.buttonPrimary)
+            .background(Self.style.buttonStyleBackgroundColor)
             .cornerRadius(90, corners: [.allCorners])
-            .shadow(type: .card)
+            .shadow(params: Self.style.buttonShadowParams)
         }
+    }
+    
+    public func style(_ style: ButtonStyleParamsProtocol) {
+        modifier(ButtonViewModifier(style: style.params))
     }
 }
 
-struct PrimaryButton_Previews: PreviewProvider {
+struct DBPrimaryButton_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             PrimaryButton(label: "Hallo", action: {})

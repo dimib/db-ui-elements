@@ -7,15 +7,25 @@
 
 import SwiftUI
 
-struct SmallSecondaryButton: View {
+public struct SmallSecondaryButton: View, StaticButtonStylable {
+
+    // MARK: Button Styleable
+    public static var style: any ButtonStylable = DefaultSmallSecondaryButtonStyle()
+
     let label: String
     let action: (() -> Void)
-    var body: some View {
+    
+    public init(label: String, action: @escaping () -> Void) {
+        self.label = label
+        self.action = action
+    }
+    
+    public var body: some View {
         Button(action: action) {
             ZStack {
                 Text(label)
-                    .textStyle(.smallButton)
-                    .foregroundColor(Color.buttonPrimary)
+                    .textStyle(Self.style.buttonTextStyle)
+                    .foregroundColor(Self.style.buttonStyleForegroundColor)
             }
             .frame(minHeight: 20)
             .background(Color.clear)
@@ -23,9 +33,13 @@ struct SmallSecondaryButton: View {
             .padding(.vertical, 4)
             .overlay {
                 RoundedRectangle(cornerRadius: 90)
-                    .stroke(Color.buttonPrimary, lineWidth: 2)
+                    .stroke(Self.style.buttonStyleForegroundColor, lineWidth: 2)
             }
         }
+    }
+    
+    public func style(_ style: ButtonStyleParamsProtocol) {
+        modifier(ButtonViewModifier(style: style.params))
     }
 }
 

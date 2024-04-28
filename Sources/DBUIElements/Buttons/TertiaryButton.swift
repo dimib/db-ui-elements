@@ -5,23 +5,35 @@
 //  Created by Dimitri Brukakis on 21.09.23.
 //
 
-import Foundation
 import SwiftUI
 
-struct TertiaryButton: View {
+public struct TertiaryButton: View, StaticButtonStylable {
+    
+    // MARK: Button Stylable
+    public static var style: any ButtonStylable = DefaultTertiaryButtonStyle()
+
     let label: String
     let action: (() -> Void)
-    var body: some View {
+    
+    public init(label: String, action: @escaping () -> Void) {
+        self.label = label
+        self.action = action
+    }
+    
+    public var body: some View {
         Button(action: action) {
             VStack {
                 Text(label)
-                    .foregroundColor(Color.textOnButtonTertiary)
-                    .textStyle(.button2)
+                    .foregroundColor(Self.style.buttonStyleForegroundColor)
+                    .textStyle(Self.style.buttonTextStyle)
             }
             .frame(maxWidth: .infinity, minHeight: 16)
             .padding(2)
-            .background(.buttonTertiary)
+            .background(.clear)
         }
+    }
+    public func style(_ style: ButtonStyleParamsProtocol) {
+        modifier(ButtonViewModifier(style: style.params))
     }
 }
 

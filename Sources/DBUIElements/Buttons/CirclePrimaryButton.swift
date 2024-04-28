@@ -7,25 +7,37 @@
 
 import SwiftUI
 
-struct CirclePrimaryButton: View {
+public struct CirclePrimaryButton: View, StaticButtonStylable {
+
+    // MARK: Button styleable
+    public static var style: any ButtonStylable = DefaultPrimaryButtonStyle()
+
     let image: Image
     let action: () -> Void
+    
+    public init(image: Image, action: @escaping () -> Void) {
+        self.image = image
+        self.action = action
+    }
 
-    var body: some View {
+    public var body: some View {
         Button(action: action) {
             VStack {
                 image
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .tint(Color.textOnButtonPrimary)
+                    .tint(Self.style.buttonStyleForegroundColor)
                     .frame(height: 22)
             }
             .frame(minWidth: 44, minHeight: 44)
             .background(Circle()
-                .foregroundColor(Color.buttonPrimary)
-                .shadow(type: .card))
+                .foregroundColor(Self.style.buttonStyleBackgroundColor)
+                .shadow(params: Self.style.buttonShadowParams))
         }
+    }
+    public func style(_ style: ButtonStyleParamsProtocol) {
+        modifier(ButtonViewModifier(style: style.params))
     }
 }
 
