@@ -24,6 +24,6 @@ public struct ShadowStyleParams {
         self.color = color
         self.radius = radius
         self.offsetX = x
-        self.offsetY = x
+        self.offsetY = y
     }
 }

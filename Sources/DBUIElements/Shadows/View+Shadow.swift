@@ -21,8 +21,12 @@ public struct ShadowModifier: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func shadow(params: ShadowStyleParams) -> some View {
         self.modifier(ShadowModifier(params: params))
+    }
+
+    func shadow(params: ShadowStyleParamsProtocol) -> some View {
+        self.modifier(ShadowModifier(params: params.params))
     }
 }
