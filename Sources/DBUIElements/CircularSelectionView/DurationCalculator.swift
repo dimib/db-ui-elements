@@ -9,7 +9,7 @@ import Foundation
 
 /// Calculate the number of hours and minutes depending on the time range (6 hours, 12 hours, 24 hours ...)
 /// given the percentage from the circular selection view
-public struct DurationCalculator {
+public struct DurationCalculator: Sendable {
     
     /// Time range in minutes
     private let timeRange: Int
