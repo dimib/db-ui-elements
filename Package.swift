@@ -6,6 +6,7 @@ import PackageDescription
 let package = Package(
     name: "DBUIElements",
     platforms: [
+        .watchOS(.v8),
         .macOS(.v14),
         .iOS(.v17)
     ],
